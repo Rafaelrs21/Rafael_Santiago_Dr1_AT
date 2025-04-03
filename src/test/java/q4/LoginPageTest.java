@@ -12,7 +12,7 @@ public class LoginPageTest extends BasePageTest {
         homePage.goToLoginPage();
 
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("invalid@example.com", "wrongpassword");
+        loginPage.login("invalido@example.com", "senhaErrada");
 
         assertTrue(loginPage.isErrorMessageDisplayed(), "A mensagem de erro não foi exibida!");
     }
