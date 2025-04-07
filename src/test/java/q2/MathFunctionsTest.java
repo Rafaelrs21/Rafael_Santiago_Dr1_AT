@@ -1,7 +1,6 @@
 package q2;
 
 import net.jqwik.api.*;
-import net.jqwik.api.arbitraries.ArrayArbitrary;
 import org.junit.jupiter.api.BeforeEach;
 import static org.mockito.Mockito.*;
 

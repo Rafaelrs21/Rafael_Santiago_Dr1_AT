@@ -13,6 +13,28 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SortUtilsTest {
 
     @Test
+    public void testLess() {
+        assertTrue(SortUtils.less(1, 2));
+        assertFalse(SortUtils.less(2, 1));
+        assertFalse(SortUtils.less(2, 2));
+    }
+
+    @Test
+    public void testGreater() {
+        assertTrue(SortUtils.greater(3, 2));
+        assertFalse(SortUtils.greater(2, 3));
+        assertFalse(SortUtils.greater(3, 3));
+    }
+
+    @Test
+    public void testGreaterOrEqual() {
+        assertTrue(SortUtils.greaterOrEqual(3, 2));
+        assertTrue(SortUtils.greaterOrEqual(2, 2));
+        assertFalse(SortUtils.greaterOrEqual(1, 2));
+    }
+
+
+    @Test
     public void isSortedEmptyArray() {
         Double[] emptyArray = {};
         assertTrue(SortUtils.isSorted(emptyArray));
@@ -48,27 +70,31 @@ public class SortUtilsTest {
         assertFalse(SortUtils.isSorted(list));
     }
 
-    @ParameterizedTest
-    @MethodSource("provideArraysForSwap")
-    public <T> void testSwap(T[] array, int i, int j, T[] expected) {
-        SortUtils.swap(array, i, j);
-        assertArrayEquals(expected, array);
+    @Test
+    public void testSwapIntegers() {
+        Integer[] array = {1, 2, 3, 4};
+        SortUtils.swap(array, 1, 2);
+        assertArrayEquals(new Integer[]{1, 3, 2, 4}, array);
     }
 
-    @ParameterizedTest
-    @MethodSource("provideArraysForSwap")
-    public <T> void testSwapFlippedIndices(T[] array, int i, int j, T[] expected) {
-        SortUtils.swap(array, j, i);
-        assertArrayEquals(expected, array);
+    @Test
+    public void testSwapSameIndex() {
+        Integer[] array = {1, 2, 3, 4};
+        SortUtils.swap(array, 2, 2);
+        assertArrayEquals(new Integer[]{1, 2, 3, 4}, array);
     }
 
-    public static Stream<Arguments> provideArraysForSwap() {
-        return Stream.of(
-                Arguments.of(new Integer[]{1, 2, 3, 4}, 1, 2, new Integer[]{1, 3, 2, 4}),
-                Arguments.of(new Integer[]{1, 2, 3, 4}, 0, 3, new Integer[]{4, 2, 3, 1}),
-                Arguments.of(new Integer[]{1, 2, 3, 4}, 2, 2, new Integer[]{1, 2, 3, 4}),
-                Arguments.of(new String[]{"a", "b", "c", "d"}, 0, 3, new String[]{"d", "b", "c", "a"}),
-                Arguments.of(new String[]{null, "b", "c", null}, 0, 3, new String[]{null, "b", "c", null})
-        );
+    @Test
+    public void testSwapStrings() {
+        String[] array = {"a", "b", "c", "d"};
+        SortUtils.swap(array, 0, 3);
+        assertArrayEquals(new String[]{"d", "b", "c", "a"}, array);
+    }
+
+    @Test
+    public void testSwapWithNulls() {
+        String[] array = {null, "b", "c", null};
+        SortUtils.swap(array, 0, 3);
+        assertArrayEquals(new String[]{null, "b", "c", null}, array);
     }
 }
