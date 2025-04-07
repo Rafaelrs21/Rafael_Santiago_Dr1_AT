@@ -53,4 +53,61 @@ public class ViaCepAPITest {
         assertEquals(200, response.getStatusCode());
         assertTrue(response.jsonPath().getString("logradouro").contains("Avenida Paulista"));
     }
+
+
+    @Test
+    public void testInvalidUF() {
+        String uf = "XX";
+        String city = "São Paulo";
+        String logradouro = "Avenida Paulista";
+        Response response = RestAssured.given()
+                .baseUri("https://viacep.com.br/ws")
+                .basePath("/{uf}/{city}/{logradouro}/json/")
+                .pathParam("uf", uf)
+                .pathParam("city", city)
+                .pathParam("logradouro", logradouro)
+                .when()
+                .get();
+
+        assertEquals(200, response.getStatusCode());
+        assertTrue(response.jsonPath().getList("$").isEmpty());
+    }
+
+
+    @Test
+    public void testInvalidCity() {
+        String uf = "SP";
+        String city = "CidadeInexistente";
+        String logradouro = "Avenida Paulista";
+        Response response = RestAssured.given()
+                .baseUri("https://viacep.com.br/ws")
+                .basePath("/{uf}/{city}/{logradouro}/json/")
+                .pathParam("uf", uf)
+                .pathParam("city", city)
+                .pathParam("logradouro", logradouro)
+                .when()
+                .get();
+
+        assertEquals(200, response.getStatusCode());
+        assertTrue(response.jsonPath().getList("$").isEmpty());
+    }
+
+
+    @Test
+    public void testInvalidLogradouro() {
+        String uf = "SP";
+        String city = "São Paulo";
+        String logradouro = "AvenidaInexistente";
+        Response response = RestAssured.given()
+                .baseUri("https://viacep.com.br/ws")
+                .basePath("/{uf}/{city}/{logradouro}/json/")
+                .pathParam("uf", uf)
+                .pathParam("city", city)
+                .pathParam("logradouro", logradouro)
+                .when()
+                .get();
+
+        assertEquals(200, response.getStatusCode());
+        assertTrue(response.jsonPath().getList("$").isEmpty());
+    }
 }

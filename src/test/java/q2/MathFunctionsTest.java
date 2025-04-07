@@ -21,7 +21,7 @@ public class MathFunctionsTest {
     @Property
     public void multiplyByTwoAlwaysReturnsEven(@ForAll int number) {
         int result = MathFunctions.MultiplyByTwo(number);
-        assertTrue(result % 2 == 0, "O resultado deve ser sempre par.");
+        assertTrue(result % 2 == 0);
 
     }
 
@@ -33,7 +33,7 @@ public class MathFunctionsTest {
         int[] table = MathFunctions.GenerateMultiplicationTable(number, limit);
 
         for (int value : table) {
-            assertTrue(value % number == 0, "Cada elemento da tabela deve ser múltiplo do número original.");
+            assertTrue(value % number == 0 );
         }
     }
 
@@ -41,7 +41,7 @@ public class MathFunctionsTest {
     public void isPrimeHasNoDivisorsOtherThanOneAndItself(@ForAll int number) {
         if (number > 1 && MathFunctions.IsPrime(number)) {
             for (int i = 2; i < number; i++) {
-                assertTrue(number % i != 0, "Número primo não deve ter divisores além de 1 e ele mesmo.");
+                assertTrue(number % i != 0 );
             }
         }
     }
@@ -53,23 +53,8 @@ public class MathFunctionsTest {
             int min = Arrays.stream(numbers).min().orElseThrow();
             int max = Arrays.stream(numbers).max().orElseThrow();
 
-            assertTrue(average >= min && average <= max, "A média deve estar entre o menor e o maior valor do array");
+            assertTrue(average >= min && average <= max);
 
         }
-    }
-
-    @Provide
-    ArrayArbitrary<Integer, Integer> intArray() {
-        return Arbitraries.integers().array(int.class).ofMinSize(1).ofMaxSize(10);
-    }
-
-    @Provide
-    Arbitrary<Integer> positiveInt() {
-        return Arbitraries.integers().greaterOrEqual(0);
-    }
-
-    @Provide
-    Arbitrary<Integer> positiveLimit() {
-        return Arbitraries.integers().greaterOrEqual(0).lessOrEqual(100);
     }
 }
