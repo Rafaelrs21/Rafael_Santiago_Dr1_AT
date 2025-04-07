@@ -1,7 +1,13 @@
 package q2;
 
-public class MathFunctions
-{
+public class MathFunctions {
+
+    private final MathLogger logger;
+
+    public MathFunctions(MathLogger logger) {
+        this.logger = logger;
+    }
+
     public static int MultiplyByTwo(int number)
     {
         return number * 2;
